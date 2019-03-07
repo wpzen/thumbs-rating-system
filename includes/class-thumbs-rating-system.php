@@ -164,8 +164,10 @@ class Thumbs_Rating_System {
 		$this->loader->add_action( 'manage_pages_custom_column', $plugin_admin, 'add_column_values', 10, 2 );
 
 		$this->loader->add_action( 'admin_init', $plugin_admin, 'sort_all_public_post_types' );
-
 		$this->loader->add_filter( 'request', $plugin_admin, 'add_request_columns' );
+
+		$this->loader->add_filter( 'add_meta_boxes', $plugin_admin, 'add_custom_meta_box' );
+		$this->loader->add_action( 'save_post', $plugin_admin, 'save_meta_box' );
 
 	}
 

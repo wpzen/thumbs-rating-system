@@ -183,4 +183,60 @@ class Thumbs_Rating_System_Admin {
 
 	}
 
+	public function add_custom_meta_box() {
+
+		add_meta_box(
+			'thumbs_rating_system_default_values',
+			'Thumbs Rating System',
+			array( $this, 'meta_box_callback' )
+		);
+
+	}
+
+	public function meta_box_callback( $post, $meta ) {
+
+		$screens = $meta['args'];
+
+		$thumbs_likes = (int) get_post_meta( $post->ID, 'thumbs_rating_likes', true );
+		$thumbs_dislikes = (int) get_post_meta( $post->ID, 'thumbs_rating_dislikes', true );
+
+		// Use nonce for verification
+		wp_nonce_field( plugin_basename(__FILE__), 'thumbs_rating_system_nonce' );
+
+		$template_path = plugin_dir_path( dirname( __FILE__ ) ) . 'admin/partials/thumbs-rating-system-admin-display.php';
+
+		require( $template_path );
+
+	}
+
+	public function save_meta_box( $post_id ) {
+
+		if ( ! isset( $_POST['thumbs_rating_likes'] ) )
+			return;
+
+		if ( ! isset( $_POST['thumbs_rating_dislikes'] ) )
+			return;
+
+		// check the nonce of our page because save_post can be called from another location
+		if ( ! wp_verify_nonce( $_POST['thumbs_rating_system_nonce'], plugin_basename(__FILE__) ) )
+			return;
+
+		// if it is a auto save do nothing
+		if ( defined('DOING_AUTOSAVE') && DOING_AUTOSAVE ) 
+			return;
+
+		// check the rights of the user
+		if( ! current_user_can( 'edit_post', $post_id ) )
+			return;
+
+		// It's OK. Now we need to find and save the data
+		// Clear the value of the input field
+		$thumbs_likes = sanitize_text_field( $_POST['thumbs_rating_likes'] );
+		$thumbs_dislikes = sanitize_text_field( $_POST['thumbs_rating_dislikes'] );
+
+		// Update the data in the database
+		update_post_meta( $post_id, 'thumbs_rating_likes', $thumbs_likes );
+		update_post_meta( $post_id, 'thumbs_rating_dislikes', $thumbs_dislikes );
+	}
+
 }
