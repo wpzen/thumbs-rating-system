@@ -166,7 +166,7 @@ class Thumbs_Rating_System_Public {
 		$post_id = intval( $_POST['post_id'] );
 		$type_of_vote = $_POST['type'];
 
-		$meta_name = 'thumbs_rating_' . $type_of_vote;
+		$meta_name = 'thumbs_rating_' . $type_of_vote . 's';
 
 		// Retrieve the meta value from the DB
 
