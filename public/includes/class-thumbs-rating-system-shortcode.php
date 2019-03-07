@@ -221,7 +221,7 @@ class Thumbs_Rating_System_Shortcode {
 		$this->update_average_rating();
 		$this->update_negative_rating();
 
-		$template_path = plugin_dir_path( dirname( __FILE__ ) ) . 'public/partials/thumbs-rating-system-public-display.php';
+		$template_path = plugin_dir_path( dirname( __FILE__ ) ) . 'partials/thumbs-rating-system-public-display.php';
 
 		ob_start();
 

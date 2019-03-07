@@ -77,7 +77,7 @@ class Thumbs_Rating_System_Public {
 		/**
 		 * The class responsible for displaying the rating.
 		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/class-thumbs-rating-system-shortcode.php';
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/includes/class-thumbs-rating-system-shortcode.php';
 
 		$this->shortcode = new Thumbs_Rating_System_Shortcode;
 	}
