@@ -188,6 +188,8 @@ class Thumbs_Rating_System {
 		$this->loader->add_action( 'wp_ajax_thumbs_rating_system_add_vote', $plugin_public, 'ajax_callback' );
 		$this->loader->add_action( 'wp_ajax_nopriv_thumbs_rating_system_add_vote', $plugin_public, 'ajax_callback' );
 
+		$this->loader->add_action( 'widgets_init', $plugin_public, 'register_widget_top_posts' );
+
 	}
 
 	/**

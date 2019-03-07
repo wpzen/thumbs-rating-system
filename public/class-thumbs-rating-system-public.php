@@ -75,6 +75,11 @@ class Thumbs_Rating_System_Public {
 	private function load_dependencies() {
 
 		/**
+		 * The class widget popular posts.
+		 */
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/includes/class-thumbs-rating-system-widget-top-posts.php';
+
+		/**
 		 * The class responsible for displaying the rating.
 		 */
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/includes/class-thumbs-rating-system-shortcode.php';
@@ -180,6 +185,12 @@ class Thumbs_Rating_System_Public {
 
 		wp_send_json( $shortcode );
 		
+	}
+
+	public function register_widget_top_posts() {
+
+		register_widget( 'Thumbs_Rating_System_Widget_Top_Posts' );
+
 	}
 
 }
