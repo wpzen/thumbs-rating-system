@@ -81,9 +81,7 @@ class Thumbs_Rating_System_Shortcode {
 	 */
 	private function update_thumbs_up() {
 
-		$thumbs_up = get_post_meta( $this->post_id, 'thumbs_rating_like', true );
-
-		$this->thumbs_up = $thumbs_up ? (int) $thumbs_up : 0;
+		$this->thumbs_up = (int) get_post_meta( $this->post_id, 'thumbs_rating_likes', true );
 
 	}
 
@@ -95,9 +93,7 @@ class Thumbs_Rating_System_Shortcode {
 	 */
 	private function update_thumbs_down() {
 
-		$thumbs_down = get_post_meta( $this->post_id, 'thumbs_rating_unlike', true );
-
-		$this->thumbs_down = $thumbs_down ? (int) $thumbs_down : 0;
+		$this->thumbs_down = (int) get_post_meta( $this->post_id, 'thumbs_rating_dislikes', true );
 
 	}
 
