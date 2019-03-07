@@ -157,6 +157,16 @@ class Thumbs_Rating_System {
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
 
+		$this->loader->add_filter( 'manage_posts_columns', $plugin_admin, 'add_columns' );
+		$this->loader->add_filter( 'manage_pages_columns', $plugin_admin, 'add_columns' );
+
+		$this->loader->add_action( 'manage_posts_custom_column', $plugin_admin, 'add_column_values', 10, 2 );
+		$this->loader->add_action( 'manage_pages_custom_column', $plugin_admin, 'add_column_values', 10, 2 );
+
+		$this->loader->add_action( 'admin_init', $plugin_admin, 'sort_all_public_post_types' );
+
+		$this->loader->add_filter( 'request', $plugin_admin, 'add_request_columns' );
+
 	}
 
 	/**
