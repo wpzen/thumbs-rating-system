@@ -169,6 +169,9 @@ class Thumbs_Rating_System {
 		$this->loader->add_filter( 'add_meta_boxes', $plugin_admin, 'add_custom_meta_box' );
 		$this->loader->add_action( 'save_post', $plugin_admin, 'save_meta_box' );
 
+		$this->loader->add_action( 'admin_menu', $plugin_admin, 'add_plugin_page' );
+		$this->loader->add_action( 'admin_init', $plugin_admin, 'plugin_settings' );
+
 	}
 
 	/**

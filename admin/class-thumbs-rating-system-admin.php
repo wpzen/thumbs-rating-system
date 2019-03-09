@@ -108,8 +108,8 @@ class Thumbs_Rating_System_Admin {
 	public function add_columns( $columns ) {
 
 		return array_merge( $columns, array(
-			'thumbs_rating_likes' =>  __( 'Likes', 'thumbs-rating-system' ),
-	        'thumbs_rating_dislikes' => __( 'Dislikes', 'thumbs-rating-system' )
+			'thumbs_rating_likes' =>  esc_html__( 'Likes', 'thumbs-rating-system' ),
+	        'thumbs_rating_dislikes' => esc_html__( 'Dislikes', 'thumbs-rating-system' )
 	    ) );
 
 	}
@@ -183,6 +183,11 @@ class Thumbs_Rating_System_Admin {
 
 	}
 
+	/**
+	 * Add meta box to the post editing page.
+	 * 
+	 * @since    1.0.0
+	 */
 	public function add_custom_meta_box() {
 
 		add_meta_box(
@@ -193,6 +198,12 @@ class Thumbs_Rating_System_Admin {
 
 	}
 
+	/**
+	 * Add fields to the meta box.
+	 * 
+	 * @since    1.0.0
+	 * @param    WP_Post    $post    Post object.
+	 */
 	public function meta_box_callback( $post, $meta ) {
 
 		$screens = $meta['args'];
@@ -209,6 +220,12 @@ class Thumbs_Rating_System_Admin {
 
 	}
 
+	/**
+	 * Save meta box settings.
+	 * 
+	 * @since    1.0.0
+	 * @param    integer    $post_id    Post ID.
+	 */
 	public function save_meta_box( $post_id ) {
 
 		if ( ! isset( $_POST['thumbs_rating_likes'] ) )
@@ -237,6 +254,160 @@ class Thumbs_Rating_System_Admin {
 		// Update the data in the database
 		update_post_meta( $post_id, 'thumbs_rating_likes', $thumbs_likes );
 		update_post_meta( $post_id, 'thumbs_rating_dislikes', $thumbs_dislikes );
+	}
+
+	/**
+	 * Create a plugin settings page.
+	 *
+	 * @since    1.0.0
+	 */
+	public function add_plugin_page() {
+		add_options_page(
+			esc_html__( 'Thumbs Rating System Settings', 'thumbs-rating-system' ),
+			'Thumbs Rating System',
+			'manage_options',
+			'thumbs-rating-system',
+			array( $this, 'options_page_output' )
+		);
+	}
+
+	/**
+	 * Add output to settings page.
+	 *
+	 * @since    1.0.0
+	 */
+	public function options_page_output() {
+	?>
+		<div class="wrap">
+			<h1><?php echo get_admin_page_title() ?></h1>
+
+			<form action="options.php" method="POST">
+				<?php
+					settings_fields( 'thumbs_rating_system_options_group' );
+					do_settings_sections( 'thumbs_rating_system_admin' );
+					submit_button();
+				?>
+			</form>
+		</div>
+		<?php
+	}
+
+	/**
+	 * Register settings and add fields to them.
+	 *
+	 * @since    1.0.0
+	 */
+	public function plugin_settings() {
+		
+		register_setting(
+			'thumbs_rating_system_options_group',
+			'thumbs_rating_system_options',
+			array( $this, 'sanitize_callback' )
+		);
+
+		add_settings_section( 'thumbs_rating_system_default', '', '', 'thumbs_rating_system_admin' ); 
+
+		add_settings_field(
+			'title_text',
+			esc_html__( 'Title text', 'thumbs-rating-system' ),
+			array( $this, 'field_title_text' ),
+			'thumbs_rating_system_admin',
+			'thumbs_rating_system_default'
+		);
+		
+		add_settings_field(
+			'enable_rich_snippets',
+			esc_html__( 'Enable Google Rich Snippets?', 'thumbs-rating-system' ),
+			array( $this, 'field_enable_rich_snippets' ),
+			'thumbs_rating_system_admin',
+			'thumbs_rating_system_default'
+		);
+
+		add_settings_field(
+			'show_rating',
+			esc_html__( 'Where to display rating?', 'thumbs-rating-system' ),
+			array( $this, 'field_show_rating' ),
+			'thumbs_rating_system_admin',
+			'thumbs_rating_system_default'
+		);
+	}
+
+	/**
+	 *  Add field output.
+	 *
+	 * @since    1.0.0
+	 */
+	function field_title_text() {
+		$val = $this->get_field_option( 'title_text' );
+		?>
+		<input type="text" name="thumbs_rating_system_options[title_text]" value="<?php echo esc_attr( $val ) ?>" />
+		<?php
+	}
+
+	/**
+	 *  Add field output.
+	 *
+	 * @since    1.0.0
+	 */
+	function field_enable_rich_snippets() {
+		$val = $this->get_field_option( 'enable_rich_snippets' );
+		?>
+		<label>
+			<input type="checkbox" name="thumbs_rating_system_options[enable_rich_snippets]" value="1" <?php checked( 1, $val ) ?>>
+			<?php esc_html_e( 'Show stars in snippet', 'thumbs-rating-system' ); ?> 
+		</label>
+		<?php
+	}
+
+	/**
+	 * Add field output.
+	 *
+	 * @since    1.0.0
+	 */
+	function field_show_rating() {
+		$val = $this->get_field_option( 'show_rating' );
+		?>
+		<select name="thumbs_rating_system_options[show_rating]">
+			<option value="0" <?php selected( 0, $val ) ?>><?php esc_html_e( 'Nowhere', 'thumbs-rating-system' ); ?></option>
+			<option value="1" <?php selected( 1, $val ) ?>><?php esc_html_e( 'End of posts', 'thumbs-rating-system' ); ?></option>
+		</select>
+		<?php
+	}
+
+	/**
+	 * Cleaning data.
+	 *
+	 * @since    1.0.0
+	 * @param    array    $options    Plugin settings.
+	 */
+	function sanitize_callback( $options ) {
+
+		foreach( $options as $name => & $val ){
+			if( 'title_text' == $name  )
+				$val = strip_tags( $val );
+
+			if( 'enable_rich_snippets' == $name || 'show_rating' == $name )
+				$val = intval( $val );
+		}
+
+		return $options;
+	}
+
+	/**
+	 * Get field option.
+	 *
+	 * @since    1.0.0
+	 * @access   private
+	 * @param    string    $option    Option name.
+	 */
+	private function get_field_option( $option ) {
+		$value = get_option('thumbs_rating_system_options');
+
+		if( isset( $value[ $option ] ) ) {
+			return $value[ $option ];
+		}
+
+		return null;
 	}
 
 }
