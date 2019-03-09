@@ -193,6 +193,8 @@ class Thumbs_Rating_System {
 
 		$this->loader->add_action( 'widgets_init', $plugin_public, 'register_widget_top_posts' );
 
+		$this->loader->add_filter( 'the_content', $plugin_public, 'content_filter' );
+
 	}
 
 	/**

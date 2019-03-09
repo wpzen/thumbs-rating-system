@@ -193,4 +193,15 @@ class Thumbs_Rating_System_Public {
 
 	}
 
+	public function content_filter( $content ) {
+		
+		$options = get_option('thumbs_rating_system_options');
+
+		if ( is_single() && isset( $options['show_rating'] ) && 1 === $options['show_rating'] ) {
+			$content .= $this->shortcode->render( get_the_ID() );
+		}
+
+		return $content;
+
+	}
 }
