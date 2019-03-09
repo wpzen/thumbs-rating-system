@@ -30,8 +30,9 @@ class Thumbs_Rating_System_Activator {
 	public static function activate() {
 
 		$default_options = array(
-			'title_text'			=> esc_html__( 'Was this article helpful?', 'thumbs-up-down-rating' ),
+			'title_text'			=> esc_html__( 'Was this article helpful?', 'thumbs-rating-system' ),
 			'enable_rich_snippets'	=> 1,
+			'enable_stats'			=> 1,
 			'show_rating'			=> 0
 		);
 

@@ -187,12 +187,23 @@ class Thumbs_Rating_System_Public {
 		
 	}
 
+	/**
+	 * Register widget top posts by rating.
+	 *
+	 * @since    1.0.0
+	 */
 	public function register_widget_top_posts() {
 
 		register_widget( 'Thumbs_Rating_System_Widget_Top_Posts' );
 
 	}
 
+	/**
+	 * Add a display rating to the end of the content.
+	 *
+	 * @since    1.0.0
+	 * @param    string    $content    Post content.
+	 */
 	public function content_filter( $content ) {
 		
 		$options = get_option('thumbs_rating_system_options');

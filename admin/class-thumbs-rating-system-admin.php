@@ -324,6 +324,14 @@ class Thumbs_Rating_System_Admin {
 		);
 
 		add_settings_field(
+			'enable_stats',
+			esc_html__( 'Enable rating statistics?', 'thumbs-rating-system' ),
+			array( $this, 'field_enable_stats' ),
+			'thumbs_rating_system_admin',
+			'thumbs_rating_system_default'
+		);
+
+		add_settings_field(
 			'show_rating',
 			esc_html__( 'Where to display rating?', 'thumbs-rating-system' ),
 			array( $this, 'field_show_rating' ),
@@ -355,6 +363,21 @@ class Thumbs_Rating_System_Admin {
 		<label>
 			<input type="checkbox" name="thumbs_rating_system_options[enable_rich_snippets]" value="1" <?php checked( 1, $val ) ?>>
 			<?php esc_html_e( 'Show stars in snippet', 'thumbs-rating-system' ); ?> 
+		</label>
+		<?php
+	}
+
+	/**
+	 *  Add field output.
+	 *
+	 * @since    1.0.0
+	 */
+	function field_enable_stats() {
+		$val = $this->get_field_option( 'enable_stats' );
+		?>
+		<label>
+			<input type="checkbox" name="thumbs_rating_system_options[enable_stats]" value="1" <?php checked( 1, $val ) ?>>
+			<?php esc_html_e( 'Show stats under rating', 'thumbs-rating-system' ); ?> 
 		</label>
 		<?php
 	}

@@ -111,6 +111,8 @@ class Thumbs_Rating_System {
 		 */
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-thumbs-rating-system-i18n.php';
 
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-thumbs-rating-system-options.php';
+
 		/**
 		 * The class responsible for defining all actions that occur in the admin area.
 		 */
@@ -235,6 +237,10 @@ class Thumbs_Rating_System {
 	 */
 	public function get_version() {
 		return $this->version;
+	}
+
+	public function test() {
+		echo 5;
 	}
 
 }
