@@ -305,28 +305,12 @@ class Thumbs_Rating_System_Admin {
 			array( $this, 'sanitize_callback' )
 		);
 
-		add_settings_section( 'thumbs_rating_system_default', '', '', 'thumbs_rating_system_admin' ); 
-
-		add_settings_field(
-			'title_text',
-			esc_html__( 'Title text', 'thumbs-rating-system' ),
-			array( $this, 'field_title_text' ),
-			'thumbs_rating_system_admin',
-			'thumbs_rating_system_default'
-		);
+		add_settings_section( 'thumbs_rating_system_default', '', '', 'thumbs_rating_system_admin' );
 		
 		add_settings_field(
 			'enable_rich_snippets',
 			esc_html__( 'Enable Google Rich Snippets?', 'thumbs-rating-system' ),
 			array( $this, 'field_enable_rich_snippets' ),
-			'thumbs_rating_system_admin',
-			'thumbs_rating_system_default'
-		);
-
-		add_settings_field(
-			'enable_stats',
-			esc_html__( 'Enable rating statistics?', 'thumbs-rating-system' ),
-			array( $this, 'field_enable_stats' ),
 			'thumbs_rating_system_admin',
 			'thumbs_rating_system_default'
 		);
@@ -345,39 +329,12 @@ class Thumbs_Rating_System_Admin {
 	 *
 	 * @since    1.0.0
 	 */
-	function field_title_text() {
-		$val = $this->get_field_option( 'title_text' );
-		?>
-		<input type="text" name="thumbs_rating_system_options[title_text]" value="<?php echo esc_attr( $val ) ?>" />
-		<?php
-	}
-
-	/**
-	 *  Add field output.
-	 *
-	 * @since    1.0.0
-	 */
 	function field_enable_rich_snippets() {
 		$val = $this->get_field_option( 'enable_rich_snippets' );
 		?>
 		<label>
 			<input type="checkbox" name="thumbs_rating_system_options[enable_rich_snippets]" value="1" <?php checked( 1, $val ) ?>>
 			<?php esc_html_e( 'Show stars in snippet', 'thumbs-rating-system' ); ?> 
-		</label>
-		<?php
-	}
-
-	/**
-	 *  Add field output.
-	 *
-	 * @since    1.0.0
-	 */
-	function field_enable_stats() {
-		$val = $this->get_field_option( 'enable_stats' );
-		?>
-		<label>
-			<input type="checkbox" name="thumbs_rating_system_options[enable_stats]" value="1" <?php checked( 1, $val ) ?>>
-			<?php esc_html_e( 'Show stats under rating', 'thumbs-rating-system' ); ?> 
 		</label>
 		<?php
 	}
@@ -405,12 +362,11 @@ class Thumbs_Rating_System_Admin {
 	 */
 	function sanitize_callback( $options ) {
 
-		foreach( $options as $name => & $val ){
-			if( 'title_text' == $name  )
-				$val = strip_tags( $val );
+		foreach( $options as $name => & $val ) {
 
 			if( 'enable_rich_snippets' == $name || 'show_rating' == $name )
 				$val = intval( $val );
+			
 		}
 
 		return $options;

@@ -4,23 +4,10 @@
  */
 
 #thumbs-rating-system {
-  text-align: center;
   font-weight: 600;
-  max-width: 600px;
-  margin:30px auto 0 auto;
-}
-
-.rating__label {
-  font-size: 22px;
-}
-
-.rating__vote {
-  margin-top:20px;
 }
 
 .rating__btn {
-  padding: 6px;
-  width: 120px;
   cursor: pointer;
   display: inline-block;
   background: transparent;
@@ -29,10 +16,14 @@
   font-weight:600;
   font-family: inherit;
   transition: 0.2s;
+  border-radius: 3px;
 }
 
-.rating__btn:focus {
-  background: #fff;
+.rating__btn-text,
+.rating__btn-icon {
+  display: inline-block;
+  width: 50px;
+  padding: 6px;
 }
 
 .rating__btn:not(:last-child){
@@ -45,7 +36,6 @@
   stroke:none;
   width:20px;
   height:18px;
-  margin-right:5px;
   transition: 0.2s;
 }
 
@@ -55,28 +45,26 @@
 }
 
 .rating__btn_like:hover,
-.rating__btn_like.voted {
+.rating__btn_like.voted,
+.rating__btn_like .rating__btn-icon {
   background: #4eb24e;
   color:#fff;
 }
 
-.rating__btn_like path {
-  fill:#4eb24e;
-}
-
-.rating__btn_unlike {
+.rating__btn_dislike {
   border: 2px solid #EC6464;
   color:#EC6464;
 }
 
-.rating__btn_unlike:hover,
-.rating__btn_unlike.voted {
+.rating__btn_dislike:hover,
+.rating__btn_dislike.voted,
+.rating__btn_dislike .rating__btn-icon {
   background: #EC6464;
   color:#fff;
 }
 
-.rating__btn_unlike path {
-  fill:#EC6464;
+.rating__btn path {
+  fill:#fff;
 }
 
 .rating__btn_like:hover path,
@@ -84,74 +72,4 @@
 .rating__btn_like.voted path,
 .rating__btn_unlike.voted path {
   fill:#fff;
-}
-
-.rating__stats {
-  display: block;
-  position: relative;
-  height: 30px;
-  width: 100%;
-  margin-top: 20px;
-}
-
-.rating__count-positive,
-.rating__count-negative {
-  display: block;
-  width: 50px;
-  height: 28px;
-  position: absolute;
-  font-size: 20px;
-  line-height: 30px;
-  font-weight: 500;
-}
-
-.rating__count-positive {
-  left: 0;
-  text-align: right;
-  color: #4eb24e;
-}
-
-.rating__count-negative {
-  left: auto;
-  right: 0;
-  color: #EC6464;
-  text-align: left;
-}
-
-.rating__line {
-  position: absolute;
-  display: block;
-  width: calc(100% - 140px);
-  background: #eee;
-  height: 6px;
-  left: 50%;
-  top: 50%;
-  -ms-transform: translate(-50%, -50%);
-  transform: translate(-50%, -50%);
-  -webkit-transform: translate(-50%, -50%);
-  overflow: hidden;
-  border-radius: 20px;
-}
-
-.rating__line-positive,
-.rating__line-negative {
-  display: block;
-  position: absolute;
-  -webkit-box-sizing: border-box;
-  box-sizing: border-box;
-  top: 0;
-  height: 100%;
-}
-
-.rating__line-positive {
-  left: 0;
-  background: #4eb24e;
-  width:100%;
-}
-
-.rating__line-negative {
-  left: auto;
-  right: 0;
-  background: #EC6464;
-  transition: 0.2s;
 }

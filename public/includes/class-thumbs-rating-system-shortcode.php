@@ -65,15 +65,6 @@ class Thumbs_Rating_System_Shortcode {
 	protected $average_rating;
 
 	/**
-	 * The percentage of negative votes to positive.
-	 *
-	 * @since    1.0.0
-	 * @access   protected
-	 * @var      integer    $post_id    Percentage of negative votes.
-	 */
-	protected $negative_rating;
-
-	/**
 	 * Get the number of likes and update variable value.
 	 *
 	 * @since    1.0.0
@@ -128,24 +119,6 @@ class Thumbs_Rating_System_Shortcode {
 	}
 
 	/**
-	 * Get the percentage of negative votes and update variable value.
-	 *
-	 * @since    1.0.0
-	 * @access   private
-	 */
-	private function update_negative_rating() {
-
-		$negative_rating = 0;
-
-		if( 0 !== $this->total_thumbs ) {	
-			$negative_rating = round((($this->thumbs_down*100)/$this->total_thumbs),2);
-		}
-
-		$this->negative_rating = $negative_rating;
-
-	}
-
-	/**
 	 * Get current post id.
 	 *
 	 * @since    1.0.0
@@ -196,16 +169,6 @@ class Thumbs_Rating_System_Shortcode {
 	}
 
 	/**
-	 * Get percentage of negative votes.
-	 *
-	 * @since    1.0.0
-	 * @return   integer    Percentage of negative votes.
-	 */
-	public function get_negative_rating() {
-		return $this->negative_rating;
-	}
-
-	/**
 	 * Output html rating code.
 	 *
 	 * @since    1.0.0
@@ -219,7 +182,6 @@ class Thumbs_Rating_System_Shortcode {
 		$this->update_thumbs_down();
 		$this->update_total_thumbs();
 		$this->update_average_rating();
-		$this->update_negative_rating();
 
 		$template_path = plugin_dir_path( dirname( __FILE__ ) ) . 'partials/thumbs-rating-system-public-display.php';
 
