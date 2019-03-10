@@ -19,11 +19,24 @@
   border-radius: 3px;
 }
 
+.rating__btn.voted .rating__btn-text:before,
+.rating__btn:hover .rating__btn-text:before {
+  content:"";
+  position: absolute;
+  top: 50%;
+  right: 0;
+  width: 1px;
+  height: 70%;
+  transform: translateY(-50%);
+  background-color: rgba(255,255,255,0.5);
+}
+
 .rating__btn-text,
 .rating__btn-icon {
   display: inline-block;
   width: 50px;
   padding: 6px;
+  position: relative;
 }
 
 .rating__btn:not(:last-child){
